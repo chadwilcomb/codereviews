@@ -3,11 +3,8 @@
 
 #####General
 - Remove commented code
-- Cache jquery selectors when using more than once, and use following style for variable name: 
-```
-    var $selector = $(‘.selector’);
-```
-- Use _.each or for loop instead of $.each (performance is better)
+- [Cache jquery selectors](https://github.com/nycdot/javascript#jquery) when using more than once, and use following style for variable name: `var $selector = $(‘.selector’);`
+- Use _.each or for loop instead of $.each [for better performance](http://jsperf.com/jquery-each-vs-for-loop/35)
 
 
 #####Models
@@ -71,8 +68,77 @@ App.Views.Location
 - 2258: change to `this.model.set(‘marked’, !this.model.get(‘marked’));`
 
 App.Views.LocationWidget
-- 2556: cache the jQuery selectors (ie `var $toStreet = $(‘#toStreet’);`) for better performance, especially when used in a loop.
+- 2556: [Cache jQuery selectors](https://github.com/nycdot/javascript#jquery), ie- `var $toStreet = $(‘#toStreet’);`) for better performance, especially when used in a loop.
+- 2631, 2640: declare `newLoc` at top of function.
 - 2668: Use $name variable name format for storing jQuery selectors and use this before selector to scope to view, ie `var $onStreet = this.$(‘#onStreet’);`
+- 2688: This switch repeats alot of the same code (jQuery ajax call). It would be better to just use the switch to set the url and data properties and then call the ajax function after the switch, like this
+```javascript
+    case 'map':
+        return false;
+    case 'stretch':
+        if (onB7SC && fromB7SC && toB7SC) {
+            doAjax = true;
+            url = globals.virtualName + '/Geosupport/GetStretchLocations/';
+            data = {
+                onStreetCode: onB7SC,
+                fromStreetCode: fromB7SC,
+                toStreetCode: toB7SC
+            };
+        }
+        break;
+    case 'block':
+        if (onB7SC && fromB7SC && toB7SC) {
+            doAjax = true;
+            url = globals.virtualName + '/Geosupport/GetBlockLocation/';
+            data = {
+                onStreetCode: onB7SC,
+                fromStreetCode: fromB7SC,
+                    toStreetCode: toB7SC
+            };
+        }
+        break;
+    case 'address':
+        if (onB7SC && houseNum) {
+            doAjax = true;
+            url = globals.virtualName + '/Geosupport/GetAddressLocation/';
+            data = {
+                onStreetCode: onB7SC,
+                houseNum: houseNum
+            };
+        }
+        break;
+    case 'intersection':
+        if (onB7SC && fromB7SC) {
+            doAjax = true;
+            url = globals.virtualName + '/Geosupport/GetIntersectionLocation/';
+            data = {
+                onB7SC: onB7SC,
+                fromB7SC: fromB7SC
+            };
+        } 
+        break;
+}
+if (doAjax) {
+    this.showLoading();
+    $.ajax({
+        url: globals.virtualName + '/Geosupport/GetIntersectionLocation/',
+        data: {
+            onB7SC: onB7SC,
+            fromB7SC: fromB7SC
+        },
+        success: function (data) {
+            _this.processResponse(data, specLoc, houseNum);
+        },
+        error: function (xhr) {
+            _this.hideLoading();
+            throw new Error(xhr.statusText);
+        }
+    });
+} else {
+    this.hideLoading();
+    return;
+}
+```
 
 #####HTML
 
