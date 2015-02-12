@@ -5,7 +5,7 @@
 - Remove commented code
 - [Cache jquery selectors](https://github.com/nycdot/javascript#jquery) when using more than once, and use following style for variable name: `var $selector = $(‘.selector’);`
 - Use _.each or for loop instead of $.each [for better performance](http://jsperf.com/jquery-each-vs-for-loop/35)
-
+- Use .js- prefixes for class names used exclusively in the JavaScript. Most event selectors in the views would then start with js-
 
 #####Models
 App.Models.Permittee
@@ -57,10 +57,14 @@ App.Views.PermitTypeCheckboxes
 App.Views.PermitTypeContainer
 
 App.Views.PermitType
+- 1483: see general comment above on event selector naming convention (.js- class names)
+- 
 
 App.Views.Permits
 
+
 App.Views.Permit
+
 
 App.Views.Location
 - 2235: Remove all the escapes before quotes `\”` from template.
@@ -69,8 +73,11 @@ App.Views.Location
 
 App.Views.LocationWidget
 - 2556: [Cache jQuery selectors](https://github.com/nycdot/javascript#jquery), ie- `var $toStreet = $(‘#toStreet’);`) for better performance, especially when used in a loop.
+- 2625: `var notReqLocs` is never used, remove it.
 - 2631, 2640: declare `newLoc` at top of function.
 - 2668: Use $name variable name format for storing jQuery selectors and use this before selector to scope to view, ie `var $onStreet = this.$(‘#onStreet’);`
+- 2805: When using setTimeout, we should always check for it and [clear the timeout before setting another one](http://www.w3schools.com/jsref/met_win_cleartimeout.asp). We may even be able to remove this setTimeout all together.
+- 2840: use this to scope selector
 - 2688: This switch repeats alot of the same code (jQuery ajax call). It would be better to just use the switch to set the url and data properties and then call the ajax function after the switch, like this
 ```javascript
     case 'map':
