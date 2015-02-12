@@ -1,13 +1,13 @@
-#####Summary
+**Summary**
 
 
-#####General
+**General**
 - Remove commented code
 - [Cache jquery selectors](https://github.com/nycdot/javascript#jquery) when using more than once, and use following style for variable name: `var $selector = $(‘.selector’);`
 - Use _.each or for loop instead of $.each [for better performance](http://jsperf.com/jquery-each-vs-for-loop/35)
 - Use .js- prefixes for class names used exclusively in the JavaScript. Most event selectors in the views would then start with js-
 
-#####Models
+**Models**
 App.Models.Permittee
 - 746: var deferred not used
 - 765: combine with previous if statement instead of nesting
@@ -25,7 +25,7 @@ App.Models.Location
 App.Models.Application
 
 
-#####Collections
+**Collections**
 
 App.Collections.PermitTypes
 - 1330, 1331: combine these two listeners since they call the same function. Also can remove the permitteeCleared function and just have the listener call reset directly, ie `this.listenTo(App.Permittee, 'change:id change:PermitteeTypeID', this.reset);`
@@ -44,11 +44,23 @@ App.Collections.LocationList
 - 2311, 2335: move these switches to some utility functions. It is repeated at least one place (line 199).
 - 2331, 2332: presentation code should not be in a Collection, move it to a View.
 
-#####Views
+**Views**
 
 App
 
 App.Views.Permittee
+- 776: Best practice is to set the `el` property only when we initialize the view. It's possible the element is not available when the JS file is first parsed. We should wait until `document.ready` (or `App.start()`) to assign the el to a view.
+- 801: Move the autocomplete initialization into it's own function.
+- 883: Remove this check for placeholder, we started doing that when we were trying to support legacy browsers, not necessary for modern browsers.
+- 919, 937, 970: replace $.each with _.each or for loop
+- 973, 978: I don't like how we have `[value="2"]` hard coded in this selector. What happens if this ProjectTypeID changes in future? 
+- 947, 1095: scope all selectors with `this`
+- 1006: App.PermitTypes should be listening to changes in App.Permittee to call it's own fetch function instead of calling it here.
+- 1013: We should not be creating a new instance of this view every time, instead we should have on instance and trigger a reset method and/or swap out the collection and re-render. Also, then this single view could be listening for the reset/sync event on App.PermitTypes and reset itself accordingly.
+- 1053: Caching $('#showStops') is good, but we should instead be caching $('#showStops tbody') instead of using find() every time.
+- 1071: no reason to concat strings or declare this as var, just insert in in html() in line 1084.
+- 1154: We should store this projectTypeId (2) as a constant (ie App.PROJECTYPE_GOVT = 2) so that if it ever were to change we could easily update this code (see comment above re line 973, 978).
+- 
 
 App.Views.PermitTypeCheckbox
 
@@ -74,7 +86,7 @@ App.Views.Location
 App.Views.LocationWidget
 - 2556: [Cache jQuery selectors](https://github.com/nycdot/javascript#jquery), ie- `var $toStreet = $(‘#toStreet’);`) for better performance, especially when used in a loop.
 - 2625: `var notReqLocs` is never used, remove it.
-- 2631, 2640: declare `newLoc` at top of function.
+- : Remove this, I don't know what it does.nction.
 - 2668: Use $name variable name format for storing jQuery selectors and use this before selector to scope to view, ie `var $onStreet = this.$(‘#onStreet’);`
 - 2805: When using setTimeout, we should always check for it and [clear the timeout before setting another one](http://www.w3schools.com/jsref/met_win_cleartimeout.asp). We may even be able to remove this setTimeout all together.
 - 2840: use this to scope selector
@@ -147,7 +159,7 @@ if (doAjax) {
 }
 ```
 
-#####HTML
+**HTML**
 
 
-#####SASS
+**SASS**
