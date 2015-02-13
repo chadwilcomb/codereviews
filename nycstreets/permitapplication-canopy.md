@@ -7,23 +7,23 @@
 
 **Models**
 
+App.Models.CanopyInfo
+- 1351-1354: declare all variables in first line of function scope. [Further reading](http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/) on variable hoisting and function scope.
+
+App.Models.Application
+- 2459: `validate` function has `attrs` as input parameters. Therefore, we can use `attrs.PermitteeDetails` instead of `this.get("PermitteeDetails")` (like we did on line 2463 for attrs.ValidStops).
+
 App.Models.Permittee :thumbsup:
 
 App.Models.PropertyOwnerInfo :thumbsup:
-
-App.Models.CanopyInfo
-- 1351-1354: declare all variables in first line of function scope. [Further reading](http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/) on variable hoisting and function scope.
 
 App.Models.Location :thumbsup:
 
 App.Models.RelatedAgencyPermit :thumbsup:
 
-App.Models.Insurance
+App.Models.Insurance :thumbsup:
 
 App.Models.Document :thumbsup:
-
-App.Models.Application
-- 2459: `validate` function has `attrs` as input parameters. Therefore, we can use `attrs.PermitteeDetails` instead of `this.get("PermitteeDetails")` (like we did on line 2463 for attrs.ValidStops).
 
 **Collections**
 
@@ -41,22 +41,22 @@ App
 
 App.Views.Permittee
 
-App.Views.CanopyInfo :thumbsup:
-
 App.Views.LocationWidget
 
 App.Views.RelatedAgencyPermit
 
 App.Views.RelatedAgencyPermits
 
-App.Views.Insurance
+App.Views.Insurance :thumbsup:
 
-App.Views.Insurances
+App.Views.Insurances :thumbsup:
 
-App.Views.Document
+App.Views.Document :thumbsup:
 
 App.Views.UploadedDocuments
 - 2428: there is no `removeRow` method.
+
+App.Views.CanopyInfo :thumbsup:
 
 **HTML**
 
