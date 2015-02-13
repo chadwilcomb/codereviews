@@ -1,9 +1,15 @@
 **Summary**
-- Again, this is constructive criticism of code that was mostly written by myself, so hopefully you can learn from my mistakes :grimacing:
+- This is constructive criticism of code that was mostly written by myself, so hopefully you can learn from my mistakes :grimacing:
+
+
+**General JavaScript Comments**
 - Move templates into the View as `<script type="text/html"></script>`
+- Add the AJAX error logging module (\logging\logging.js) to this bundle and throw Errors from inside all AJAX error functions `error: function (xhr) { throw new Error(xhr.statusText); }`
 - Use [single quotes `''` for strings](https://github.com/nycdot/javascript-style-guide#strings)
 - Use [_this instead of self to copy `this`](https://github.com/nycdot/javascript-style-guide#naming-conventions)
 - Use [class names prefixed with js-](https://github.com/nycdot/javascript-style-guide#jquery) for selectors used only for JavaScript purposes.
+- Use [shortcut](https://github.com/nycdot/javascript-style-guide#conditional-expressions--equality) `if (contracts.length)` rather than `if (contracts.length > 0)` [68, 379, 569, 969, 1068, 1094, 1180, 1250, 1501, 2073, 2360, 2472]
+- Use _.each or for loop instead of $.each [for better performance](http://jsperf.com/jquery-each-vs-for-loop/35) [74, 953, 971, 1003, 1075, 1096, 1632, 1816, 1823, 1836]
 
 **Models**
 
@@ -40,8 +46,15 @@ App.Collections.UploadedDocuments :thumbsup:
 App
 
 App.Views.Permittee
+- 1069, use a better var name, ie `var = $ul`
+- 1117: use `this` prefix for selectors.
 
 App.Views.LocationWidget
+- 1682: Cache the `$('#FromStreet')` and `$('#ToStreet')` selectors before using it in a loop.
+- 1691: I doubt that this is a necessary way to parse the JSON, just use `var myData = JSON.parse(data.fromstreets);`.
+- 1702: This is like a really old-school way to append `<option>`s to a `<select>`. We should use this syntax instead: `$select.append($('<option>', { value : key }).text(value));`
+- 1726: Remove this check for placeholder, not necessary for modern browsers.
+- 1811: Cache the `$('#ToStreet')` selector before using it in a loop.
 
 App.Views.RelatedAgencyPermit
 
