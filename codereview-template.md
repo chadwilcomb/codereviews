@@ -1,25 +1,25 @@
-***Summary***
+**Summary**
 
 
 
 
-***General***
+**General**
 
-***Models***
-
-
-
-***Collections***
+**Models**
 
 
 
-***Views***
+**Collections**
 
 
 
-***HTML***
+**Views**
+
+
+
+**HTML**
 
 
 
 
-***SASS***
+**SASS**
