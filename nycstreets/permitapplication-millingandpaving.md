@@ -1,5 +1,5 @@
 **Summary**
-
+- Most of the issues with this code are things that I wrote :confused:. The major improvement that can be mad is caching the Permit Views instead of creating them every time (see :boom: below) and then not removing them. This could potentially be using up a lot of resources in the browser. 
 
 **General**
 - Remove commented code.
@@ -91,7 +91,7 @@ App.Views.PermitType
 - 1721: `'PermitTypeID'` repeated in `_.omit()`
 
 App.Views.Permits
-- :boom: 1765: When we create all of these child views, we should cache them by adding references to an array so that we don't just keep adding multiple views and using memory. Use [this template](https://gist.github.com/chadwilcomb/18037a4ce0be22ec67fa). We should refactor all of our PermitApplication pages to use this pattern.
+- :boom: 1765: When we create all of these child views, we should cache them by adding references to an array so that we don't just keep adding multiple views and using memory. Use [this template](https://gist.github.com/chadwilcomb/18037a4ce0be22ec67fa). We should refactor all of our PermitApplication pages to use this pattern. And when we remove the parent view, we should loop through the cache and remove all of the child views as well.
 
 App.Views.Permit
 - 1932: Backbone models don't have a 'remove' event (only destroy)
