@@ -44,10 +44,17 @@ App.Collections.UploadedDocuments :thumbsup:
 **Views**
 
 App
+- 102, 118: Remove commented code.
+- 594: Cache `this.$('#submitModal')` or use a single selector, like `this.$('#submitModal .modal-header')` rather than using `.find()`
+- 738: Remove this Modernizr placeholder workaround, it's for legacy browsers only
 
 App.Views.Permittee
 - 1069, use a better var name, ie `var = $ul`
-- 1117: use `this` prefix for selectors.
+- 1135: There is no `clearHomeOwnerInfo();` function, this throws an error :open_mouth:. Just remove it.
+- 1117: use `this` prefix for selectors wherever possible.
+
+App.Views.PropertyOwnerInfo
+- Add mask to phone number input field. Check with Manhole Application to see implementation. This also needs to be added to Vault Application
 
 App.Views.LocationWidget
 - 1682: Cache the `$('#FromStreet')` and `$('#ToStreet')` selectors before using it in a loop.
@@ -56,13 +63,14 @@ App.Views.LocationWidget
 - 1726: Remove this check for placeholder, not necessary for modern browsers.
 - 1811: Cache the `$('#ToStreet')` selector before using it in a loop.
 
-App.Views.RelatedAgencyPermit
+App.Views.RelatedAgencyPermit :thumbsup:
 
-App.Views.RelatedAgencyPermits
+App.Views.RelatedAgencyPermits :thumbsup:
 
 App.Views.Insurance :thumbsup:
 
-App.Views.Insurances :thumbsup:
+App.Views.Insurances
+- If you add some insurances and then remove them all, you lose the top row. 
 
 App.Views.Document :thumbsup:
 
@@ -74,6 +82,5 @@ App.Views.CanopyInfo :thumbsup:
 **HTML**
 
 
-
-
 **SASS**
+:thumbsup:
