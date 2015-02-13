@@ -1,5 +1,5 @@
 **Summary**
-- Most of the issues with this code are things that I wrote :confused:. The major improvement that can be mad is caching the Permit Views instead of creating them every time (see :boom: below) and then not removing them. This could potentially be using up a lot of resources in the browser. 
+- Most of the issues with this code are things that I wrote :confused:. The major improvement that can be made is caching the Permit Views instead of creating them every time and then not removing them (see :boom: below). This could potentially be using up a lot of resources in the browser. 
 
 **General**
 - Remove commented code.
