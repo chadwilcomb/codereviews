@@ -9,6 +9,7 @@
 - Use .js- prefixes for class names used exclusively in the JavaScript. Most event selectors in the views would then start with js-
 
 **Models**
+
 App.Models.Permittee
 - 746: var deferred not used
 - 765: combine with previous if statement instead of nesting
