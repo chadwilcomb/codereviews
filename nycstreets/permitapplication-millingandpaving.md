@@ -6,7 +6,7 @@
 - Add comments to describe what each function does and when/how it is called.
 - [Cache jquery selectors](https://github.com/nycdot/javascript#jquery) when using more than once, and use following style for variable name: `var $selector = $(‘.selector’);`
 - Use _.each or for loop instead of $.each [for better performance](http://jsperf.com/jquery-each-vs-for-loop/35)
-- Use .js- prefixes for class names used exclusively in the JavaScript. Most event selectors in the views would then start with js-
+- Use [class names prefixed with js-](https://github.com/nycdot/javascript-style-guide#jquery) for selectors used only for JavaScript purposes.
 
 **Models**
 
