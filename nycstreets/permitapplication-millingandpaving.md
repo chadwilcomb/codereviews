@@ -2,7 +2,8 @@
 
 
 **General**
-- Remove commented code
+- Remove commented code.
+- Add comments to describe what each function does and when/how it is called.
 - [Cache jquery selectors](https://github.com/nycdot/javascript#jquery) when using more than once, and use following style for variable name: `var $selector = $(‘.selector’);`
 - Use _.each or for loop instead of $.each [for better performance](http://jsperf.com/jquery-each-vs-for-loop/35)
 - Use .js- prefixes for class names used exclusively in the JavaScript. Most event selectors in the views would then start with js-
@@ -18,12 +19,13 @@ App.Models.PermitType
 - 1238: move all variable definitions to first line of validate function.
 
 App.Models.Permit
+- 1804: do we need these defaults?
 
 App.Models.Location
 - 2181: remove url attribute
 
 App.Models.Application
-
+- :thumbsup:
 
 **Collections**
 
@@ -43,10 +45,18 @@ App.Collections.Permits
 App.Collections.LocationList
 - 2311, 2335: move these switches to some utility functions. It is repeated at least one place (line 199).
 - 2331, 2332: presentation code should not be in a Collection, move it to a View.
+- 2334: Use `App.getBoroName()` instead
 
 **Views**
 
 App
+- 733: scope the App view to `$('#content')` instead of `$('body')`
+- 768: add `$('.modal').appendTo('body')` to move all the modals at once, remove the individual `appendTo('body')` from modal() calls.
+- 48: cache the jQuery selectors, especially if using in a loop, ie- `$('#submit-modal-body')`
+- 157-159: just set the values of these variables in the same line as declaring them.
+- 48, 89, 111: All of this static text should be in a constant at the top of the App object or in a seperate object so it can be edited easier and/or reused where possible.
+- 177: It seems like `enabled` should be false by default and we should be checking `App.AllPermits.length` rather than `App.LocationList` and `App.SelectedPermitTypes`
+- 151, 729: duplicate function, `close()` never called.
 
 App.Views.Permittee
 - 776: Best practice is to set the `el` property only when we initialize the view. It's possible the element is not available when the JS file is first parsed. We should wait until `document.ready` (or `App.start()`) to assign the el to a view.
@@ -60,23 +70,33 @@ App.Views.Permittee
 - 1053: Caching $('#showStops') is good, but we should instead be caching $('#showStops tbody') instead of using find() every time.
 - 1071: no reason to concat strings or declare this as var, just insert in in html() in line 1084.
 - 1154: We should store this projectTypeId (2) as a constant (ie App.PROJECTYPE_GOVT = 2) so that if it ever were to change we could easily update this code (see comment above re line 973, 978).
-- 
 
 App.Views.PermitTypeCheckbox
+- :thumbsup:
 
 App.Views.PermitTypeCheckboxes
+- 1345: just set the value when you declare the var (line 1343).
 
 App.Views.PermitTypeContainer
+- :thumbsup:
 
 App.Views.PermitType
-- 1483: see general comment above on event selector naming convention (.js- class names)
-- 
+- 1473: no need to declare `_this`, remove this line.
+- 1483: see general comment above on event selector naming convention (`.js-` class names)
+- 1513: no need to declare `_this`, remove this line and change line 1515 to use `this`.
+- 1645, 1474: just have the listener call `remove()` and get rid of this `destroy` function altogether.
+- 1653: this if statement and `pt` variable seem unnecessary, just use `permitTypeId`
+- 1652, 1656, 1657: `alertText` variable is unnecessary, just insert the string into `jConfirm()`
+- 1677-1681: use the variables we declared in lines 1665-1669.
+- 1721: `'PermitTypeID'` repeated in `_.omit()`
 
 App.Views.Permits
-
+- :boom: 1765: When we create all of these child views, we should cache them by adding references to an array so that we don't just keep adding multiple views and using memory. Use [this template](https://gist.github.com/chadwilcomb/18037a4ce0be22ec67fa). We should refactor all of our PermitApplication pages to use this pattern.
 
 App.Views.Permit
-
+- 1932: Backbone models don't have a 'remove' event (only destroy)
+- 2066: I don't think this will work, we probably need to do this instead: `this.$('input.permit[name="HoursOfOperation"][value="' + this.model.get('HoursOfOperation') + '"]').prop('checked', true)`
+- 2085: cache all these selectors so that we can use them inside the `.on('keyup', function (e)`
 
 App.Views.Location
 - 2235: Remove all the escapes before quotes `\”` from template.
@@ -88,78 +108,12 @@ App.Views.LocationWidget
 - 2625: `var notReqLocs` is never used, remove it.
 - : Remove this, I don't know what it does.nction.
 - 2668: Use $name variable name format for storing jQuery selectors and use this before selector to scope to view, ie `var $onStreet = this.$(‘#onStreet’);`
-- 2805: When using setTimeout, we should always check for it and [clear the timeout before setting another one](http://www.w3schools.com/jsref/met_win_cleartimeout.asp). We may even be able to remove this setTimeout all together.
+- 2805: When using setTimeout, we should always check for it and [clear the timeout before setting another one](http://www.w3schools.com/jsref/met_win_cleartimeout.asp). We may even be able to remove this setTimeout altogether.
 - 2840: use this to scope selector
-- 2688: This switch repeats alot of the same code (jQuery ajax call). It would be better to just use the switch to set the url and data properties and then call the ajax function after the switch, like this
-```javascript
-    case 'map':
-        return false;
-    case 'stretch':
-        if (onB7SC && fromB7SC && toB7SC) {
-            doAjax = true;
-            url = globals.virtualName + '/Geosupport/GetStretchLocations/';
-            data = {
-                onStreetCode: onB7SC,
-                fromStreetCode: fromB7SC,
-                toStreetCode: toB7SC
-            };
-        }
-        break;
-    case 'block':
-        if (onB7SC && fromB7SC && toB7SC) {
-            doAjax = true;
-            url = globals.virtualName + '/Geosupport/GetBlockLocation/';
-            data = {
-                onStreetCode: onB7SC,
-                fromStreetCode: fromB7SC,
-                    toStreetCode: toB7SC
-            };
-        }
-        break;
-    case 'address':
-        if (onB7SC && houseNum) {
-            doAjax = true;
-            url = globals.virtualName + '/Geosupport/GetAddressLocation/';
-            data = {
-                onStreetCode: onB7SC,
-                houseNum: houseNum
-            };
-        }
-        break;
-    case 'intersection':
-        if (onB7SC && fromB7SC) {
-            doAjax = true;
-            url = globals.virtualName + '/Geosupport/GetIntersectionLocation/';
-            data = {
-                onB7SC: onB7SC,
-                fromB7SC: fromB7SC
-            };
-        } 
-        break;
-}
-if (doAjax) {
-    this.showLoading();
-    $.ajax({
-        url: globals.virtualName + '/Geosupport/GetIntersectionLocation/',
-        data: {
-            onB7SC: onB7SC,
-            fromB7SC: fromB7SC
-        },
-        success: function (data) {
-            _this.processResponse(data, specLoc, houseNum);
-        },
-        error: function (xhr) {
-            _this.hideLoading();
-            throw new Error(xhr.statusText);
-        }
-    });
-} else {
-    this.hideLoading();
-    return;
-}
-```
+- 2688: This switch repeats alot of the same code (jQuery ajax call). It would be better to just use the switch to set the url and data properties and then call the ajax function after the switch, [like this](https://gist.github.com/chadwilcomb/c9ddf626883b3d0bd312)
 
 **HTML**
-
+- :100:
 
 **SASS**
+- :100:
