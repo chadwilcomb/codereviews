@@ -1,7 +1,7 @@
 ###Active Permits
 
 **Summary**
-- The View is missing the basic HTML elements required (DOCTYPE and <html>). I'm surprised this page even loads! Is there a (good) reason not to use the Layout view for this page?
+- The View is missing the basic HTML elements required (DOCTYPE and `<html>`). I'm surprised this page even loads! Is there a (good) reason not to use the Layout view for this page?
 - We need a container class to put all of our Bootstrap rows and columns inside.
 - Put the Location Description in a large font at the top of the page.
 - Don't write custom collapse functionality, instead use the Bootstrap collapse functions with the standard classes and data- attributes. Here is a [Gist](https://gist.github.com/chadwilcomb/4251efa111a081cd2119) that has the basic outline of all you need (no JavaScript code required except including bootstrap.js).
